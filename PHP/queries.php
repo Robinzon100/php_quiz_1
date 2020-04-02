@@ -38,11 +38,20 @@ class Queries{
         return $data;
     }
 
-    function insertUserAndScore($username, $score){
-        $stmt = $this->conn->prepare("INSERT INTO `users`(`username`, `score`) VALUES (:username,:Score)");
+    function insertUserAndScore($username, $score, $passed){
+        // $stmt = $this->conn->prepare("INSERT INTO `users`(`username`, `score`) VALUES (".$username.",".$score.")");
+        // $stmt->bindParam(':username', $username);
+        // $stmt->bindParam(':score', $score);
+        // $stmt->execute();
+
+        $stmt = $this->conn->prepare("INSERT INTO `users`(`username`, `score`, `passed`) VALUES (:username,:score,:passed)");
         $stmt->bindParam(':username', $username);
         $stmt->bindParam(':score', $score);
+        $stmt->bindParam(':passed', $passed);
+        
         $stmt->execute();
+        echo "warmatebit chaabare dzmobilo";
+
     }
 }
 
@@ -55,8 +64,7 @@ class Queries{
 
 $query = new Queries();
 if (isset($_POST['username'])) {
-    echo "xellllp";
-    $query->insertUserAndScore($_POST['selcted']);
+    $query->insertUserAndScore($_POST['username'], $_POST['score'], 1);
 }
 
 
